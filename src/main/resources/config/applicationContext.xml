@@ -7,6 +7,7 @@
         <property name="locations">
             <list>
                 <value>classpath:application.properties</value>
+                <value>classpath:zooKeeper.properties</value>
             </list>
         </property>
     </bean>
