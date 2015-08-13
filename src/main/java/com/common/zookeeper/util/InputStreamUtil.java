@@ -21,4 +21,9 @@ public class InputStreamUtil {
 		ByteArrayInputStream is = new ByteArrayInputStream(data);
 		return is;
 	}
+	
+	public static String inputStream2String(InputStream is) {
+		// TODO 2015/08/05
+		return "";
+	}
 }
