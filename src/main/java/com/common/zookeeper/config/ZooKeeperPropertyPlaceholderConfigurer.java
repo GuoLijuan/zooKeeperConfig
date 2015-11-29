@@ -1,9 +1,9 @@
 package com.common.zookeeper.config;
 
-import java.io.UnsupportedEncodingException;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
 import java.util.Properties;
 
-import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
@@ -16,11 +16,11 @@ public class ZooKeeperPropertyPlaceholderConfigurer extends PropertyPlaceholderC
 	@Override
 	protected void processProperties(ConfigurableListableBeanFactory beanFactoryToProcess, Properties props)
 	        throws BeansException {
-	    // TODO Auto-generated method stub
 	    super.processProperties(beanFactoryToProcess, props);
 	    
 	    try {
 	        fillCustomProperties(props);
+	        
 	        logger.info(props);
         } catch (Exception e) {
         	logger.error(e.getMessage(), e);
@@ -33,13 +33,18 @@ public class ZooKeeperPropertyPlaceholderConfigurer extends PropertyPlaceholderC
 	   fillProperties(props, data);
     }
 
-	private void fillProperties(Properties props, byte[] data) throws UnsupportedEncodingException {
+	private void fillProperties(Properties props, byte[] data) throws IOException {
 		String cfg = new String(data, "UTF-8");
 		// TODO mutiline configuration
-		if(StringUtils.isNotBlank(cfg)){
-			String[] cfgArr = StringUtils.split(cfg, "=");
-			props.put(cfgArr[0], cfgArr[1]);
-		}
+//		if(StringUtils.isNotBlank(cfg)){
+//			String[] cfgArr = StringUtils.split(cfg, "=");
+//			props.put(cfgArr[0], cfgArr[1]);
+//		}
+		
+		props.load(new ByteArrayInputStream(data));
+		
+//		System.out.println(">>>>>>> " + cfg);
+		
     }
 
 	private byte[] getData(Properties props) throws Exception {
